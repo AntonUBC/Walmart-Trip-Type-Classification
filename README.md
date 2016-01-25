@@ -16,7 +16,7 @@ The task was to classify customer trips using only a transactional dataset of th
 
 ### Data
 
-Data fields
+Data fields:
 
 - TripType - a categorical id representing the type of shopping trip the customer made. This is the ground truth that we had to predict
 - VisitNumber - an id corresponding to a single trip by a single customer
