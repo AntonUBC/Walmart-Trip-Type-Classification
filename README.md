@@ -26,8 +26,7 @@ Data fields
 - DepartmentDescription - a high-level description of the item's department
 - FinelineNumber - a more refined category for each of the products, created by Walmart
 
-- Number of rows in the training dataset: 647,054
-- Number of rows in the test dataset: 653,646
+Number of rows in the training dataset: 647,054. Number of rows in the test dataset: 653,646
 
 The data was multi-dimensional (several rows per customer). However, the submission format assumed only one row with predicted probabilities per customer. Therefore, the dataset must have been transformed from long to wide format, which created enormous opportunities for feature engineering.
  
