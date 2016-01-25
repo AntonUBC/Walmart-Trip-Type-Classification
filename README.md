@@ -30,6 +30,28 @@ Number of rows in the training dataset: 647,054. Number of rows in the test data
 
 The data was multi-dimensional (several rows per customer). However, the submission format assumed only one row of predicted probabilities per customer. Therefore, the dataset must have been transformed from long to wide format, which created enormous opportunities for feature engineering.
  
+### Feature Engineering
+
+I created the following features from the datafields described above:
+
+- Min, Max, Mean, and Range = Max-Min of the number of products per Visit-Department combination
+- Indicators for missing department and finelinenumber information
+- Indicator for product return
+- Number of Upc products, Fineline products, and Departments visited
+- Sum of products bought
+- Ratios: #Fineline/#Departments, #Upc/#Departments, mean/min, max/mean
+- Product counts for 70% most frequent Fineline products
+- Product counts by Department
+- Number of returned products by department
+- Number of multiproduct purchases by department
+- Counts of multiple rows by department
+- Counts of rows excluding product returns by department
+- Counts of rows with product return by department
+- Department dummies and their two-way interactions (only for 60% most frequent departments)
+
+Dimensions of resulting datasets: train -  
+
+### Stacked Generalization
 
 
 
