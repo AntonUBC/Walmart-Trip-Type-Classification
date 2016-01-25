@@ -28,7 +28,7 @@ Data fields:
 
 Number of rows in the training dataset: 647,054. Number of rows in the test dataset: 653,646
 
-The data was multi-dimensional (several rows per customer). However, the submission format assumed only one row with predicted probabilities per customer. Therefore, the dataset must have been transformed from long to wide format, which created enormous opportunities for feature engineering.
+The data was multi-dimensional (several rows per customer). However, the submission format assumed only one row of predicted probabilities per customer. Therefore, the dataset must have been transformed from long to wide format, which created enormous opportunities for feature engineering.
  
 
 
