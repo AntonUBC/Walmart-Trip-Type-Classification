@@ -49,9 +49,16 @@ I created the following features from the datafields described above:
 - Counts of rows with product return by department
 - Department dummies and their two-way interactions (only for 60% most frequent departments)
 
-Dimensions of resulting datasets: train -  
+Dimensions of resulting data: 95,674 X 4,490
 
 ### Stacked Generalization
+
+[Stacked generalization](http://machine-learning.martinsewell.com/ensembles/stacking/) is an ensembling algorithm which allows combining predictions of multiple models by estimating optimal ensemble weights for each prediction. Here, by optimal I mean weights which give the highest cross-validation score. In the simplest case, stacking can be performed with a linear regression. In general, using more sophisticated learning algorithms can significantly improve model performance. To reduce overfitting staccking is performed using out-of-fold predictions which is shown in the following figure:
+
+![alt tag](https://github.com/AntonUBC/Walmart-Trip-Type-Classification/blob/master/pictures/Chart-2.png)
+
+
+
 
 
 
