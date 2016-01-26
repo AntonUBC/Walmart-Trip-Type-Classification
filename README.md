@@ -79,7 +79,9 @@ To increase the predictive power of the stacked data, I computed Euclidean dista
 
 ### Ensembling
 
+The resulting stacked data were trained using GBT (XGBoost) and NN (Keras) classifiers. As I mentioned earlier, I did not have time for extensive parameter search and determined the number of rounds using the early stopping strategy. Since the second stage models were used to estimate the optimal weights on the first stage predictions, I chose the conservative values of hyperparameters in order to avoid overfitting. Finally, the obtained two matrices of predicted probabilities were combined using the formula:
 
+```preds_ensemble = preds_gbt^0.784 * preds_nn^0.216```
 
 
 
