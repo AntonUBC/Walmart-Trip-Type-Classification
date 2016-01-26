@@ -75,13 +75,33 @@ In this competition I used 15 different models in the stacking procedure:
 To reduce memory burden, KNN classifiers were trained on the lower dimension data (PCA).
 Tree models were trained using sparse data (thanks to XGBoost and Scikit-Learn!).
 Neural nets were trained on dense matrices using [PReLU activation](http://arxiv.org/abs/1502.01852), [batch normalization](http://arxiv.org/abs/1502.03167), and dropout for regularization (thanks to Keras again!). Training neural nets on such big data would be practically impossible without GPU (thanks Theano!). My average Nvidia-Quadro performed one epoch of training in impressive 10-20 sec. (depending on the batch size).
-To increase the predictive power of the stacked data, I computed Euclidean distances from each observation to the nearest one, nearest three, and nearest five members of each class (as predicted by stacked probabilities) and added them to the data. The resulting dataset had 38*15 + 37*3 = 681 columns (one class was not voted in distance estimation due to uniformly low probability of success). 
+To increase the predictive power of the stacked data, I computed Euclidean distances from each observation to the nearest one, nearest three, and nearest five members of each class (as predicted by stacked probabilities) and added them to the data. The resulting dataset had ```38*15 + 37*3 = 681``` columns (one class was not voted in distance estimation due to uniformly low probability of success). 
 
 ### Ensembling
 
-The resulting stacked data were trained using GBT (XGBoost) and NN (Keras) classifiers. As I mentioned earlier, I did not have time for extensive parameter search and determined the number of rounds using the early stopping strategy. Since the second stage models were used to estimate the optimal weights on the first stage predictions, I chose the conservative values of hyperparameters in order to avoid overfitting. Finally, the obtained two matrices of predicted probabilities were combined using the formula:
+The resulting stacked data was trained using GBT (XGBoost) and NN (Keras) classifiers. As I mentioned earlier, I did not have time for extensive parameter search, so I chose the conservative values of hyperparameters in order to avoid overfitting. The neural network classifier was trained using [adaptive moment estimation algorithm](http://arxiv.org/abs/1412.6980v8). To reduce the variance of NN predictions, one can use bagging by choosing ```Bagging = True``` in the beginning of main trees. I did not do it but expect it to lower the LB score by considerable amount (depending on the number of rounds). The number of trees (epochs) was determined using the early stopping strategy (stop iterations when the validation loss is not decreasing). Finally, the obtained matrices of predicted probabilities were combined using the formula:
 
 ```preds_ensemble = preds_gbt^0.784 * preds_nn^0.216```
+
+### Instruction
+
+- download train and test data from the [competition website](https://www.kaggle.com/c/walmart-recruiting-trip-type-classification/data) and put all the data
+into folder ```./data``` (you will need to specify the path to this directory using ```/kaggle_flavours_of_physics/flavours_utils/paths.py```). You must also create a folder ```./submission``` in the same subfolder. This folder will be used for saving predictions.
+
+Scripts:
+- ```/walmart_trip_type_classification/wrappers/models.py``` contains wrapper-classes for Keras and XGBoost (to make them more sklearn-like). This module is used in ```ensemble_submission.py```.
+- ```/walmart_trip_type_classification/walmart_utils/utils.py``` contains functions which are used for data load, feature engineering, bagging, stacking, and saving the submission file in csv format. This module is used in ```ensemble_submission.py```.
+- ```/walmart_trip_type_classification/walmart_utils/paths.py``` contains paths to data and submission folders.
+- ```/walmart_trip_type_classification/ensemble/ensemble_submission.py``` is the main module which is used to generate predictions.   
+Warning: the stacking procedure used in the first model is computationally intensive and may take up to 24 hours to complete (it took me 19 hours on my 4-core 2.60GHz laptop with 16 GB RAM). The bagging procedure is also computationally intensive with approximately 30 min. per round (providing you have GPU). Do not run it if your theano if not configured for GPU (or you simply do not have a GPU-card).
+ 
+### Dependencies
+- Python 3.4 (Python 2.7 would also work, just type: ```from __future__ import print_function``` in the beginning of the script)
+- Pandas (any relatively recent version would work)
+- Numpy (any relatively recent version would work)
+- Sklearn (any relatively recent version would work)
+- Keras 0.2.0
+- XGBoost 0.4.0
 
 
 
