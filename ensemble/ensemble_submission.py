@@ -211,4 +211,4 @@ preds_nn_bag = utils.Bagging(train_nn, test_nn, y, bagging_size, clf_nn)
 # Compute the weighted probability matrix for final submission
 preds_subm = (preds_xgb**0.784)*(preds_nn_bag**0.216)
 # Save submission  
-utils.save_submission(preds_subm)                                                                                                                                           
+utils.save_submission(preds_nn_bag)                                                                                                                                           
