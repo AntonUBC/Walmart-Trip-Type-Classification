@@ -19,7 +19,7 @@ from wrappers import models
 # which are trained using the stacked data
 
 Bagging = True
-if bagging==True:
+if Bagging==True:
    bagging_size = 50 # set the number of bagging rounds for stabilizing NN predictions
 
 n_folds = 3 # set the number of folders for generating meta-features
