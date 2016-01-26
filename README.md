@@ -53,9 +53,27 @@ Dimensions of resulting data: 95,674 X 4,490
 
 ### Stacked Generalization
 
-[Stacked generalization](http://machine-learning.martinsewell.com/ensembles/stacking/) is an ensembling algorithm which allows combining predictions of multiple models by estimating optimal ensemble weights for each prediction. Here, by optimal I mean weights which give the highest cross-validation score. In the simplest case, stacking can be performed with a linear regression. In general, using more sophisticated learning algorithms can significantly improve model performance. To reduce overfitting staccking is performed using out-of-fold predictions which is shown in the following figure:
+[Stacked generalization](http://machine-learning.martinsewell.com/ensembles/stacking/) is an ensembling algorithm which allows combining predictions of multiple models by estimating optimal ensemble weights for each prediction. Here, by optimal I mean weights which give the highest cross-validation score. In the simplest case, stacking can be performed with a linear regression. In general, using more sophisticated learning algorithms can significantly improve model performance. To reduce overfitting, stacking of training data is performed using out-of-fold predictions which is shown in the following figure:
 
 ![alt tag](https://github.com/AntonUBC/Walmart-Trip-Type-Classification/blob/master/pictures/Chart-2.png)
+
+Here, training data is split into three folders. What we have to do is just recursively train each of our models on the two folders and generate predictions for the third folder. Finally, vertically stacking all three prediction vectors (or matrices), we obtain our stacked training data. Note, that the stacking occurs in the horizontal dimension too, since we adding predictions of different models. In general, the more folders the data are split into, the less is the risk of overfitting (5-10 folders is the optimal number similarly to the usual CV). Stacking test data is performed in the conventional way.
+
+In this competition I used 15 different models in the stacking procedure:
+
+- KNN with 10, 20, 40, 80, 120, and 160 neighbors
+- Gradient Boosting Trees
+- AdaBoost with CART
+- Random Forest
+- Extra Trees
+- Feed-forward NN with two hidden layers (1024 units each) estimated using the RMSPROP algorithm
+- Feed-forward NN with two hidden layers (1024 units each) estimated using the AdaGrad algorithm
+- Feed-forward NN with three hidden layers (512 units each) estimated using the RMSPROP algorithm
+- Feed-forward NN with three hidden layers (512 units each) estimated using the AdaGrad algorithm
+- Logistic regression
+
+To reduce memory burden, tree models were trained using sparse data (thanks to XGBoost and Scikit-Learn!).
+Neural nets were trained on dense matrices using [PReLU activation](http://arxiv.org/abs/1502.01852), [batch normalization](http://arxiv.org/abs/1502.03167), and dropout for regularization (thanks to Keras again!). Training neural nets on such big data would be practically impossible without GPU (thanks Theano!). My average Nvidia-Quadro performed one epoch of training in impressive 10-20 sec. (depending on the batch size).
 
 
 
