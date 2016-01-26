@@ -18,8 +18,11 @@ from wrappers import models
 # The 2d layer model is an ensemble of XGBoost and Neural Net Classifiers
 # which are trained using the stacked data
 
+Bagging = True
+if bagging==True:
+   bagging_size = 50 # set the number of bagging rounds for stabilizing NN predictions
+
 n_folds = 3 # set the number of folders for generating meta-features
-bagging_size = 50 # set the number of bagging rounds for stabilizing NN predictions
 
 def Load_Data_raw():
          
@@ -206,9 +209,15 @@ clf_nn =  models.Keras_NN_Classifier(batch_norm=True, hidden_units=512,
 clf_xgb.fit(train_trees, y)
 
 preds_xgb = clf_xgb.predict_proba(test_trees)
-preds_nn_bag = utils.Bagging(train_nn, test_nn, y, bagging_size, clf_nn)
+
+if (Bagging==True):
+   preds_nn = utils.Bagging(train_nn, test_nn, y, bagging_size, clf_nn)
+else:
+    clf_nn.fit(train_nn, y)
+    preds_nn = clf_nn.predict_proba(test_nn)
+    
 
 # Compute the weighted probability matrix for final submission
-preds_subm = (preds_xgb**0.784)*(preds_nn_bag**0.216)
+preds_subm = (preds_xgb**0.784)*(preds_nn**0.216)
 # Save submission  
-utils.save_submission(preds_nn_bag)                                                                                                                                           
+utils.save_submission(preds_subm)                                                                                                                                           
