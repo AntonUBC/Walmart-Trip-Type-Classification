@@ -202,9 +202,9 @@ clf_xgb = models.XGBoost_multilabel(nthread=6, eta=0.016 ,gamma=1, max_depth=9,
 
 clf_nn =  models.Keras_NN_Classifier(batch_norm=True, hidden_units=512,
                           hidden_layers=2, input_dropout=0.4,
-                          prelu=True, hidden_dropout=0.4, hidden_activation=None, batch_size=128, #256
-                          nb_epoch=10, optimizer='adam', learning_rate=0.001, momentum=None, decay=None,
-                          rho=None, epsilon=1e-08, validation_split=0) #110
+                          prelu=True, hidden_dropout=0.4, hidden_activation=None, batch_size=128, 
+                          nb_epoch=110, optimizer='adam', learning_rate=0.001, momentum=None, decay=None,
+                          rho=None, epsilon=1e-08, validation_split=0) 
 
 clf_xgb.fit(train_trees, y)
 
