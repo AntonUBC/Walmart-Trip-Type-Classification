@@ -72,8 +72,14 @@ In this competition I used 15 different models in the stacking procedure:
 - Feed-forward NN with three hidden layers (512 units each) estimated using the AdaGrad algorithm
 - Logistic regression
 
-To reduce memory burden, tree models were trained using sparse data (thanks to XGBoost and Scikit-Learn!).
+To reduce memory burden, KNN classifiers were trained on the lower dimension data (PCA).
+Tree models were trained using sparse data (thanks to XGBoost and Scikit-Learn!).
 Neural nets were trained on dense matrices using [PReLU activation](http://arxiv.org/abs/1502.01852), [batch normalization](http://arxiv.org/abs/1502.03167), and dropout for regularization (thanks to Keras again!). Training neural nets on such big data would be practically impossible without GPU (thanks Theano!). My average Nvidia-Quadro performed one epoch of training in impressive 10-20 sec. (depending on the batch size).
+To increase the predictive power of the stacked data, I computed Euclidean distances from each observation to the nearest one, nearest three, and nearest five members of each class (as predicted by stacked probabilities) and added them to the data. The resulting dataset had 38*15 + 37*3 = 681 columns (one class was not voted in distance estimation due to uniformly low probability of success). 
+
+### Ensembling
+
+
 
 
 
