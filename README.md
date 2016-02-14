@@ -63,7 +63,7 @@ Here, training data is split into three folders. What we have to do is just recu
 In this competition I used 15 different models in the stacking procedure:
 
 - KNN (Sklearn) with 10, 20, 40, 80, 120, and 160 neighbors
-- Gradient Boosting Trees (XGBoost
+- Gradient Boosting Trees (XGBoost)
 - AdaBoost with CART (Sklearn)
 - Random Forest (Sklearn)
 - Extra Trees (Sklearn)
